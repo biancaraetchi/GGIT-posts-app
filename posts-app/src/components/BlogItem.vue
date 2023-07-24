@@ -14,7 +14,8 @@ export default {
     name: "BlogItem",
     props:{
         mood: String,
-        title: String
+        title: String,
+        totalLikes: Number
     },
     data: function(){
         return{
@@ -22,12 +23,18 @@ export default {
         }
     },
     methods:{
+        changeTotalLikes: function(change){
+            let newLikes = this.totalLikes+change
+            this.$emit('interface',{likes:newLikes})
+        },
         incrementLikes: function(){
             this.likes++
+            this.changeTotalLikes(1)
         },
         decrementLikes: function(){
             if(this.likes !== 0){
                 this.likes--
+                this.changeTotalLikes(-1)
             }
         }
     }

@@ -3,6 +3,7 @@
   <div class="smart">
     <h1>My Blog</h1>
     <div class="filter">
+    <div>Total likes: {{ likes }}</div>
       <span>filter by:</span>
       <span>mood - <span id="select"></span></span>
     </div>
@@ -13,7 +14,7 @@
       <button class="sleepy mood" @click="mood('sleepy')">sleepy</button>
     </div>
     <div class="container" v-for="item in posts" :key="item.id">
-      <BlogItem v-if="currentMood === '' || currentMood === item.mood" :mood="item.mood" :title="item.title" ></BlogItem>
+      <BlogItem v-if="currentMood === '' || currentMood === item.mood" :mood="item.mood" :title="item.title" :totalLikes="likes" @interface="updateLikes($event)" ></BlogItem>
     </div>
   </div>
   </body>
@@ -28,6 +29,7 @@ export default {
   },
   data: function(){
     return{
+    likes:0,
     posts:[
         {
             "id":0,
@@ -54,6 +56,9 @@ export default {
       }
   },
   methods:{
+    updateLikes: function(event){
+      this.likes = event.likes
+    },
     mood: function(newMood){
       this.currentMood = newMood
     }
